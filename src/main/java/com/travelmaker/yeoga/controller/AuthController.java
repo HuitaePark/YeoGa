@@ -1,7 +1,7 @@
 package com.travelmaker.yeoga.controller;
 
-import com.yeoga.service.AuthService;
-import com.yeoga.dto.LoginDTO;
+import com.travelmaker.yeoga.service.AuthService;
+import com.travelmaker.yeoga.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
