@@ -21,9 +21,10 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/yeoga/login", "/yeoga/login/find", "/yeoga/main", "/yeoga/signup").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/logout", "/api/user/signup").permitAll() // 엔드포인트 경로 확인
                         .anyRequest().authenticated()
                 )
+                .cors(withDefaults()) // CORS 설정 추가
                 .httpBasic(withDefaults()); // JWT 구현 전까지 임시로 사용
 
         return http.build();

@@ -1,31 +1,30 @@
 package com.travelmaker.yeoga.controller;
 
-import com.travelmaker.yeoga.service.AuthService;
 import com.travelmaker.yeoga.dto.LoginDTO;
+import com.travelmaker.yeoga.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/yeoga")
+@RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthService authService;
-
     @Autowired
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
+    private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        String token = authService.login(loginDTO.getEmail(), loginDTO.getPassword());
-        return ResponseEntity.ok(token);
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+        return authService.login(loginDTO);
     }
 
-    @GetMapping("/login/find")
-    public ResponseEntity<String> findAccount(@RequestParam String email) {
-        String result = authService.findAccount(email);
-        return ResponseEntity.ok(result);
+    @GetMapping("/current-user")
+    public ResponseEntity<?> getCurrentUser() {
+        return authService.getCurrentUser();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return authService.logout();
     }
 }
