@@ -2,7 +2,7 @@ package com.travelmaker.yeoga.service;
 
 import com.travelmaker.yeoga.dto.LoginDTO;
 import com.travelmaker.yeoga.dto.SignupDTO;
-import com.travelmaker.yeoga.entity.User;
+import com.travelmaker.yeoga.model.User;
 import com.travelmaker.yeoga.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,31 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    public ResponseEntity<?> signup(SignupDTO signupDTO) {
-        if (userRepository.existsByEmail(signupDTO.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Email is already in use!");
-        }
-
-        User user = new User(
-                signupDTO.getUsername(),
-                signupDTO.getEmail(),
-                passwordEncoder.encode(signupDTO.getPassword())
-        );
-
-        userRepository.save(user);
-
-        return ResponseEntity.ok("User registered successfully!");
-    }
 
     public ResponseEntity<?> login(LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
